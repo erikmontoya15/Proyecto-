@@ -4,8 +4,7 @@ from random import randint
 import APISERVICE
 import DBSERVICE
 from Bebida import bebida
-
-class buscarNombre(APISERVICE.APISERVICE):
+class APIBebida(APISERVICE.APISERVICE):
     def buscarNombre(self, drinkName):
         url = 'http://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + drinkName
         response = requests.get(url)
@@ -34,17 +33,6 @@ class buscarNombre(APISERVICE.APISERVICE):
         if response.status_code == 200:
             response_json = response.json()  # DiccionarioJ con elemento de una lista
             idDrink = response_json['drinks']  # Elemento de la lista que es un diccionario
-
-            i = 0  # variable de control para obtener los nombres de los resultados a buscar
-            nombreBebidas = []  # almaceno en una lista los nombres de los resultados a buscar
-            infoBebidas = []  # almaceno todos los elementos de todas las bebidas
-            for clave in idDrink:
-                clave = idDrink[i].get("strDrink")  # imprimo los nombres de los resultados
-                nombreBebidas.append((f"Bebida {clave} numero {i}"))
-
-                clave = idDrink[i]  # guardo cada diccionario de cada bebida
-                infoBebidas.append(clave)
-                i += 1
 
             # asignamos el valor de bebida
             id = idDrink[bebidaElegida].get("idDrink")
@@ -78,9 +66,10 @@ class buscarNombre(APISERVICE.APISERVICE):
 
             return b
 
-class guardarBebida(DBSERVICE.DBSERVICE):
-    def __init__(self):
-        self.con = sqlite3.connect('El_Fieston.db')
+class DB(DBSERVICE.DBSERVICE):
+    def __init__(self, archivo):
+        self.con = sqlite3.connect(archivo)
+        #self.con = sqlite3.connect('El_Fieston.db')
         self.cur = self.con.cursor()
 
     def guardarBebida(self, bebida):
@@ -110,9 +99,10 @@ class guardarBebida(DBSERVICE.DBSERVICE):
 
     def actualizarBebida(self, nombre, bienElectrico):
         self.cur.execute("UPDATE favoritos SET bienElectrico= ? WHERE nombre=?",(bienElectrico, nombre))
+        #print(bienElectrico,nombre)
         self.con.commit()
 
         return (f"La Bebida: {nombre} fue actualizada =) !!!")
 
 if __name__ == '__main__':
-    db = guardarBebida()
+    db = DB()

@@ -12,6 +12,7 @@ def buscar(apiclas):
 
 def guardar(apiclas2, bebida):
     print(apiclas2.guardarBebida(bebida))
+    #return apiclas2.guardarBebida(bebida)
 
 def mostrarLista(apiclas2):
     print("Aqui tu lista de Favoritos !!! ")
@@ -33,7 +34,7 @@ def elegirLista(apiclas2):
     lista = mostrarLista2(apiclas2)
 
     return lista[be]
-
+1
 def actualizar(apiclas2, nombre, bienElectrico):
     actu = apiclas2.actualizarBebida(nombre, bienElectrico)
     return actu
@@ -43,8 +44,9 @@ def borrar(apiclas2, nombre):
     return borr
 
 def main():
-    apiclas = APICLASS.buscarNombre()
-    apiclas2 = APICLASS.guardarBebida()
+    apiclas = APICLASS.APIBebida()
+    #apiclas2 = APICLASS.DB()
+    apiclas2 = APICLASS.DB('El_Fieston.db')
     print("Bienvenido al Sabor, Elige una opcion: ")
     opcion = int(input("MENU"+"\n"+"1 -> Buscar Bebida "+"\n"+"2 -> Mostrar Bebidas Guardadas "+ "\n3 -> Actualizar Bebida " +"\n4 -> Borrar Bebida" +"\n"+"5 -> Salir " + "\nOpcion: "))
     cont = 0
@@ -57,9 +59,10 @@ def main():
             if gb == 0:
                 #guardo la bebida
                 guardar(apiclas2, bde)
+
                 opcion = int(input("MENU"+"\n"+"1 -> Buscar Bebida "+"\n"+"2 -> Mostrar Bebidas Guardadas "+ "\n3 -> Actualizar Bebida " +"\n4 -> Borrar Bebida" +"\n"+"5 -> Salir " + "\nOpcion: "))
             elif gb == 1:
-                #muestro el meno de nuevo porque no se guardo la bebida
+                #muestro el menu de nuevo porque no se guardo la bebida
                 opcion = int(input("MENU"+"\n"+"1 -> Buscar Bebida "+"\n"+"2 -> Mostrar Bebidas Guardadas "+ "\n3 -> Actualizar Bebida " +"\n4 -> Borrar Bebida" +"\n"+"5 -> Salir " + "\nOpcion: "))
             else:
                 #vuelvo a pedir que me den una opcion porque no me dieron una valida
